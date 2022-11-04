@@ -1,0 +1,18 @@
+version: '3.0'
+
+services:
+  node: &node
+    container_name: rv-deliver-app-backend-node
+    image: node:current-alpine3.14
+    working_dir: "/opt/app"
+    volumes:
+      - "${PWD}:/opt/app"
+
+  api:
+    <<: *node
+    container_name: rv-deliver-app-backend-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - "${PWD}:/opt/app"
+    entrypoint: ["yarn", "start:dev"]
