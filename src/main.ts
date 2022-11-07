@@ -9,16 +9,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-  .setTitle('AutoTagger API')
+  .setTitle('SpotList API')
   .setVersion('1.0')
   .addBearerAuth()
-  .addOAuth2()
   .build();
   
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(String(cnfSv.get('BASE_PATH_DOCS')), app, document);
-
-
 
   await app.listen(3000);
 }

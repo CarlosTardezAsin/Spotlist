@@ -4,7 +4,7 @@ import { SongList } from './songlist.entity';
 @Entity()
 export class User extends BaseEntity {
 	@PrimaryGeneratedColumn()
-	id: string;
+	id: number;
 
 	@Column({ type: 'varchar', unique: true, length: 100, nullable: false })
 	name: string;
