@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { SignUpDTO } from "src/DTO/auth/signup.DTO";
 import { SongDTO } from "src/DTO/song.DTO";
 import { SongListPostDTO } from "src/DTO/songlist.DTO";
 import { Song, SongList, User } from "src/entities";
@@ -14,13 +15,24 @@ export class UserService {
         private songSv: SongService,
         @InjectRepository(User) private userRepository: Repository<User>
     ) {}
+    
+    
 
     /**
-	 * @param id
+	 * @param by user id
 	 * @returns An user entity or undefined if user doesn't exist on db
 	 */
-    async findOne(id: number): Promise<User | undefined> {
-        return this.userRepository.findOne({ where: {id}, relations: { songLists: true }})
+    async findOne(by: {id: number}): Promise<User | undefined>
+    /**
+	 * @param by user name
+	 * @returns An user entity or undefined if user doesn't exist on db
+	 */
+    async findOne(by: {name: string}): Promise<User | undefined>;
+    async findOne(by: {id?: number, name?: string}): Promise<User | undefined> {
+        if(typeof by.id !== 'undefined') {
+            return this.userRepository.findOne({ where: {id: by.id}, relations: { songLists: true }})
+        }
+        return this.userRepository.findOne({ where: {name: by.name}})
     }
 
     /**
@@ -30,7 +42,7 @@ export class UserService {
 	 * @throws Error if user not exist
 	 */
     async getListsOfUser(userId: number): Promise<SongList[]> {
-        const user = await this.findOne(userId);
+        const user = await this.findOne({id: userId});
         if (!user) {
 			throw new Error(`User ${userId} does not exist`);
 		}
@@ -46,7 +58,7 @@ export class UserService {
 	 * @throws Error if user not exist
 	 */
     async getListOfUser(userId: number, listId: number): Promise<SongList> {
-        const user = await this.findOne(userId);
+        const user = await this.findOne({id: userId});
         if (!user) {
 			throw new Error(`User ${userId} does not exist`);
 		}
@@ -61,7 +73,7 @@ export class UserService {
 	 * @param songList
 	 */
     async addListToUser(userId: number, songList: SongListPostDTO): Promise<SongList> {
-        const user = await this.findOne(userId);
+        const user = await this.findOne({id: userId});
         if (!user) {
 			throw new Error(`User ${userId} does not exist`);
 		}
@@ -78,7 +90,7 @@ export class UserService {
      * 
 	 */
     async addSongToList(userId: number, listId: number, song: SongDTO): Promise<Song> {
-        const user = await this.findOne(userId);
+        const user = await this.findOne({id: userId});
         if (!user) {
 			throw new Error(`User ${userId} does not exist`);
 		}
@@ -89,5 +101,9 @@ export class UserService {
 
         await this.songlistSv.postSongList(user, list)
         return songDb;
+    }
+
+    async createUser(user: SignUpDTO): Promise<User> {
+        return this.userRepository.save(user);
     }
 }

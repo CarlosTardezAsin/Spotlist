@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class UserDTO {
 	@Expose()
-	@IsString()
+	@IsNumber()
 	@IsNotEmpty()
-	id: string;
+	id: number;
 
 	@Expose()
 	@ApiProperty()

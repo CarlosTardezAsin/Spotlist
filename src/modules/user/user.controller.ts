@@ -1,11 +1,14 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
-import { ApiTags } from "@nestjs/swagger";
+import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { plainToInstance } from "class-transformer";
 import { SongDTO } from "src/DTO/song.DTO";
 import { SongListGetDTO, SongListPostDTO } from "src/DTO/songlist.DTO";
 import { UserService } from "./user.service";
 
 @ApiTags('User')
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @Controller('users')
 export class UserController {
     constructor(private userSv: UserService) {}
