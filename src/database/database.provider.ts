@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import { ConfigService } from '@nestjs/config';
-import { Song, SongList, User } from 'src/entities';
+import { Song, SongList, User } from '../entities';
 import { DataSource, DataSourceOptions} from 'typeorm';
 import 'dotenv/config'
 

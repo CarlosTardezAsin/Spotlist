@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { SongDTO } from "src/DTO/song.DTO";
-import { Song } from "src/entities";
+import { SongDTO } from "../../DTO";
+import { Song } from "../../entities";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -19,11 +19,11 @@ export class SongService {
 
 
     /**
-	 * CREATE {@link Song} or get the{@link Song} from db.
+	 * CREATE {@link Song} or get the {@link Song} from db.
 	 * @param songlist
 	 * @return a new Song or a Song from db
 	 */
-    async createSong(song: SongDTO): Promise<Song> {
+    async checkSong(song: SongDTO): Promise<Song> {
         const songDb = await this.findOne(song.artist, song.title);
         if(!songDb) {
             return this.songRepository.save(song);

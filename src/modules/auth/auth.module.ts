@@ -19,10 +19,7 @@ import { UserModule } from "../user/user.module";
 			inject: [ConfigService],
 			useFactory(cnfSv: ConfigService) {
 				return {
-					secret: cnfSv.get('JWT_SECRET'),
-					signOptions: {
-						expiresIn: parseInt(cnfSv.get('JWT_EXPIRETIME')),
-					},
+					secret: cnfSv.get('JWT_SECRET')
 				};
 			},
 		}),

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { SongListPostDTO } from "src/DTO/songlist.DTO";
-import { Song, SongList, User } from "src/entities";
+import { SongListPostDTO } from "../../DTO";
+import { Song, SongList, User } from "../../entities";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -16,15 +16,15 @@ export class SongListService {
 	 * @param userId
 	 * @returns All lists of a user
 	 */
-	async getLists(userId: number): Promise<SongList[]>;
+	async getLists(userId: number): Promise<SongList[] | undefined>;
     /**
 	 *
 	 * @param userId
 	 * @param listId
 	 * @returns A single list of a user with given listId
 	 */
-	async getLists(userId: number, listId: number): Promise<SongList>;
-    async getLists(userId: number, listId?: number): Promise<SongList[] | SongList> {
+	async getLists(userId: number, listId: number): Promise<SongList | undefined>;
+    async getLists(userId: number, listId?: number): Promise<SongList[] | SongList | undefined> {
         if(!listId) {
             return this.songlistRepository.find({ where: { user: { id: userId }}, relations: { songs: true }})
         }

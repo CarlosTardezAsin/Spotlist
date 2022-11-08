@@ -18,3 +18,8 @@ import { UserModule } from './modules/user/user.module';
   providers: [],
 })
 export class AppModule {}
+
+@Module({
+	imports: [UserModule, AuthModule]
+})
+export class AppTestingModule {}

@@ -2,8 +2,7 @@ import { Body, Controller, Get, Post, Request, UseGuards } from "@nestjs/common"
 import { AuthGuard } from "@nestjs/passport";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import * as express from 'express';
-import { SignUpDTO } from "src/DTO/auth/signup.DTO";
-import { SigninDTO } from "src/DTO/auth/sigin.DTO";
+import { SigninDTO, SignUpDTO } from "../../DTO/auth";
 import { AuthService } from "./auth.service";
 
 @ApiTags('Auth')
