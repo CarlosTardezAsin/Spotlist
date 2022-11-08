@@ -6,10 +6,10 @@ export class Song extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ type: 'varchar', length: 100, nullable: false })
+	@Column({nullable: false })
 	artist: string;
 
-	@Column({ type: 'varchar', length: 100, nullable: false })
+	@Column({nullable: false })
 	title: string;
 
 	@ManyToMany(() => SongList, songlist => songlist.songs)

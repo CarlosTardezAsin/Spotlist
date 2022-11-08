@@ -8,7 +8,7 @@ export class SongList extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ type: 'varchar', length: 100, nullable: false })
+	@Column({ nullable: false })
 	name: string;
 
 	@Exclude()
