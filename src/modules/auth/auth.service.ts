@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { SigninDTO } from "src/DTO/auth/sigin.DTO";
 import { UserService } from "../user/user.service";
@@ -36,9 +36,17 @@ export class AuthService {
         return { token };
     }
 
-    async signup(user: SignUpDTO): Promise<User> {
+    async signup(user: SignUpDTO): Promise<{token: string}> {
+        const userDb = await this.userSv.findOne({name: user.name});
+        if(userDb) {
+            throw new BadRequestException('User with that name already created')
+        }
+
         user.password = hashSync(user.password, 0);
-        return this.userSv.createUser(user);
+        const newUser = await this.userSv.createUser(user);
+
+        const token = this.jwtSv.sign(newUser);
+        return { token }
     }    
 }
 

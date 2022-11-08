@@ -23,7 +23,7 @@ export class AuthController {
     }
 
     @Post('signup')
-    async signup(@Body() signupDto: SignUpDTO) {
+    async signup(@Body() signupDto: SignUpDTO): Promise<{token: string}> {
         return this.authSv.signup(signupDto);
     }
 }
