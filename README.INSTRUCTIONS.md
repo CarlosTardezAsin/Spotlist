@@ -1,5 +1,4 @@
-Documentación y explicación de las decisiones tomadas en el desarrollo del proyecto:
-Diseño
+### Documentación y explicación de las decisiones tomadas en el desarrollo del proyecto:
 
 Se ha elegido nestjs como el framework para desarrollar la REST API de SpotList. 
 La logica de negocio ha sido encapsulada en diferentes módulos de acuerdo a su contexto. Los servicios se encargan de proporcionar la informacion correspondiente respectos las sentencias ejecutadas sobre la base de datos, los controladores son los encargados de manejar las requests recibidas
